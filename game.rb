@@ -1,5 +1,5 @@
 def setup
-  @board = ["0","1","2","3","4","5","6","7","8"]
+  @board = ["1","2","3","4","5","6","7","8","9"]
   @whose_turn = "H"
   @victory = 0
 end
@@ -13,18 +13,21 @@ end
 def human_take_turn
   print "Which square? "
   @selection = gets.chomp.to_i
+  puts "@selection is #{@selection}"
   check_space("human", @selection)
 end
 
 def cpu_take_turn
-  @selection = rand(0..8)
+  puts "CPU playing..."
+  @selection = rand(1..9)
+  puts "@selection = #{@selection}"
   check_space("cpu", @selection)
 end
 
 def check_space(player, selection)
-  if selection == @board[selection].to_i
+  if selection == @board[selection - 1].to_i
     if player == "human"
-      @board[selection] = "H"
+      @board[selection -1] = "H"
       @whose_turn = "C"
     else
       @board[selection] = "C"
