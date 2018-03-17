@@ -1,5 +1,5 @@
 def setup
-  @board = ["0","1","2","3","4","5","6","7","8"]
+  @board = ["1","2","3","4","5","6","7","8", "9"]
   @turns = 0
 end
 
@@ -10,23 +10,39 @@ def show_board
 end
 
 def human_take_turn
+  puts "HUMAN TURN"
   print "Which square? "
-  @selection = gets.chomp.to_i
-  check_spcae(@selection)
+  @selection = gets.chomp.to_i - 1
+  check_space("human", @selection)
 end
 
 def cpu_take_turn
-  selection = rand(0..8)
+  puts "CPU TURN"
+  @selection = rand(1..9)
+  check_space("cpu", @selection)
 end
 
-def check_spcae(selection)
-  if selection == @board[selection].to_i
-    @board[selection] = "X"
+def check_space(player, selection)
+  if selection == @board[selection - 1].to_i
+    if player == "human"
+      @board[selection] = "X"
+    else
+      @board[selection] = "O"
+    end
   else
-    puts "Square already taken."
+    if player == "human"
+      puts "Square already taken."
+      human_take_turn
+    else
+      cpu_take_turn
+    end
   end
 end
 
 
 setup
+show_board
+human_take_turn
+show_board
+cpu_take_turn
 show_board
